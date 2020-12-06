@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Node from './Node/index';
+import React, {Component} from 'react';
+import Node from './Node';
 
 import './styles.css';
 
 export default class Path extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      grid: [], 
+      grid: [],
       mouseIsPressed: false,
       START_NODE_ROW: 5,
       FINISH_NODE_ROW: 5,
@@ -18,25 +18,27 @@ export default class Path extends Component {
       isRunning: false,
       isStartNode: false,
       isFinishNode: false,
-      isWallNode: false, 
+      isWallNode: false,
       currRow: 0,
       currCol: 0,
-    }
+      isDesktopView: true,
+    };
+
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    this.toggleIsRunning = this.toggleIsRunning.bind(this)
+    this.toggleIsRunning = this.toggleIsRunning.bind(this);
   }
 
   componentDidMount() {
     const grid = this.getInitialGrid();
-    this.setState({ grid });
+    this.setState({grid});
   }
 
   toggleIsRunning() {
-    this.setState({ isRunning: !this.state.isRunning });
+    this.setState({isRunning: !this.state.isRunning});
   }
 
-    toggleView() {
+  toggleView() {
     if (!this.state.isRunning) {
       this.clearGrid();
       this.clearWalls();
@@ -173,13 +175,13 @@ export default class Path extends Component {
               `node-${this.state.currRow}-${this.state.currCol}`,
             ).className = 'node';
 
-            this.setState({ currRow: row, currCol: col });
+            this.setState({currRow: row, currCol: col});
             const currStartNode = this.state.grid[row][col];
             currStartNode.isStart = true;
             document.getElementById(`node-${row}-${col}`).className =
               'node node-start';
           }
-          this.setState({ START_NODE_ROW: row, START_NODE_COL: col });
+          this.setState({START_NODE_ROW: row, START_NODE_COL: col});
         } else if (this.state.isFinishNode) {
           if (nodeClassName !== 'node node-wall') {
             const prevFinishNode = this.state.grid[this.state.currRow][
@@ -190,16 +192,16 @@ export default class Path extends Component {
               `node-${this.state.currRow}-${this.state.currCol}`,
             ).className = 'node';
 
-            this.setState({ currRow: row, currCol: col });
+            this.setState({currRow: row, currCol: col});
             const currFinishNode = this.state.grid[row][col];
             currFinishNode.isFinish = true;
             document.getElementById(`node-${row}-${col}`).className =
               'node node-finish';
           }
-          this.setState({ FINISH_NODE_ROW: row, FINISH_NODE_COL: col });
+          this.setState({FINISH_NODE_ROW: row, FINISH_NODE_COL: col});
         } else if (this.state.isWallNode) {
           const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
-          this.setState({ grid: newGrid });
+          this.setState({grid: newGrid});
         }
       }
     }
@@ -207,10 +209,10 @@ export default class Path extends Component {
 
   handleMouseUp(row, col) {
     if (!this.state.isRunning) {
-      this.setState({ mouseIsPressed: false });
+      this.setState({mouseIsPressed: false});
       if (this.state.isStartNode) {
         const isStartNode = !this.state.isStartNode;
-        this.setState({ isStartNode, START_NODE_ROW: row, START_NODE_COL: col });
+        this.setState({isStartNode, START_NODE_ROW: row, START_NODE_COL: col});
       } else if (this.state.isFinishNode) {
         const isFinishNode = !this.state.isFinishNode;
         this.setState({
@@ -226,18 +228,33 @@ export default class Path extends Component {
   handleMouseLeave() {
     if (this.state.isStartNode) {
       const isStartNode = !this.state.isStartNode;
-      this.setState({ isStartNode, mouseIsPressed: false });
+      this.setState({isStartNode, mouseIsPressed: false});
     } else if (this.state.isFinishNode) {
       const isFinishNode = !this.state.isFinishNode;
-      this.setState({ isFinishNode, mouseIsPressed: false });
+      this.setState({isFinishNode, mouseIsPressed: false});
     } else if (this.state.isWallNode) {
       const isWallNode = !this.state.isWallNode;
-      this.setState({ isWallNode, mouseIsPressed: false });
+      this.setState({isWallNode, mouseIsPressed: false});
       this.getInitialGrid();
     }
   }
+  visualize(algo) {
+    if (!this.state.isRunning) {
+      this.clearGrid();
+      this.toggleIsRunning();
+      const {grid} = this.state;
+      const startNode =
+        grid[this.state.START_NODE_ROW][this.state.START_NODE_COL];
+      const finishNode =
+        grid[this.state.FINISH_NODE_ROW][this.state.FINISH_NODE_COL];
+      let visitedNodesInOrder;
+      const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+      nodesInShortestPathOrder.push('end');
+      this.animate(visitedNodesInOrder, nodesInShortestPathOrder);
+    }
+  }
 
-  render() {
+    render() {
     const {grid, mouseIsPressed} = this.state;
     return (
       <div>
@@ -265,7 +282,7 @@ export default class Path extends Component {
                           this.handleMouseEnter(row, col)
                         }
                         onMouseUp={() => this.handleMouseUp(row, col)}
-                        row={row}/>                       
+                        row={row}/>
                     );
                   })}
                 </tr>
@@ -278,7 +295,7 @@ export default class Path extends Component {
   }
 }
 
-const getNewGridWithWallToggled = (grid, row, col) =>{
+const getNewGridWithWallToggled = (grid, row, col) => {
   const newGrid = grid.slice();
   const node = newGrid[row][col];
   if (!node.isStart && !node.isFinish && node.isNode) {
@@ -289,4 +306,14 @@ const getNewGridWithWallToggled = (grid, row, col) =>{
     newGrid[row][col] = newNode;
   }
   return newGrid;
+};
+
+function getNodesInShortestPathOrder(finishNode) {
+  const nodesInShortestPathOrder = [];
+  let currentNode = finishNode;
+  while (currentNode !== null) {
+    nodesInShortestPathOrder.unshift(currentNode);
+    currentNode = currentNode.previousNode;
+  }
+  return nodesInShortestPathOrder;
 }

@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+
+import './styles.css';
 
 export default class Node extends Component {
   render() {
@@ -12,14 +14,14 @@ export default class Node extends Component {
       onMouseUp,
       row,
     } = this.props;
-
+    
     const extraClassName = isFinish
       ? 'node-finish'
       : isStart
-        ? 'node-start'
-        : isWall
-          ? 'node-wall'
-          : '';
+      ? 'node-start'
+      : isWall
+      ? 'node-wall'
+      : '';
 
     return (
       <td
