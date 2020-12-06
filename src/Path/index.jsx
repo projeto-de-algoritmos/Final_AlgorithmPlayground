@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Node from './Node';
+import Node from './Node/index';
+
+import './styles.css';
 
 export default class Path extends Component {
   constructor(props) {
@@ -32,6 +34,37 @@ export default class Path extends Component {
 
   toggleIsRunning() {
     this.setState({ isRunning: !this.state.isRunning });
+  }
+
+    toggleView() {
+    if (!this.state.isRunning) {
+      this.clearGrid();
+      this.clearWalls();
+      const isDesktopView = !this.state.isDesktopView;
+      let grid;
+      if (isDesktopView) {
+        grid = this.getInitialGrid(
+          this.state.ROW_COUNT,
+          this.state.COLUMN_COUNT,
+        );
+        this.setState({isDesktopView, grid});
+      } else {
+        if (
+          this.state.START_NODE_ROW > this.state.MOBILE_ROW_COUNT ||
+          this.state.FINISH_NODE_ROW > this.state.MOBILE_ROW_COUNT ||
+          this.state.START_NODE_COL > this.state.MOBILE_COLUMN_COUNT ||
+          this.state.FINISH_NODE_COL > this.state.MOBILE_COLUMN_COUNT
+        ) {
+          alert('Start & Finish Nodes Must Be within 10 Rows x 20 Columns');
+        } else {
+          grid = this.getInitialGrid(
+            this.state.MOBILE_ROW_COUNT,
+            this.state.MOBILE_COLUMN_COUNT,
+          );
+          this.setState({isDesktopView, grid});
+        }
+      }
+    }
   }
 
   getInitialGrid = (
@@ -232,7 +265,7 @@ export default class Path extends Component {
                           this.handleMouseEnter(row, col)
                         }
                         onMouseUp={() => this.handleMouseUp(row, col)}
-                        row={row}></Node>
+                        row={row}/>                       
                     );
                   })}
                 </tr>
@@ -243,4 +276,17 @@ export default class Path extends Component {
       </div>
     );
   }
+}
+
+const getNewGridWithWallToggled = (grid, row, col) =>{
+  const newGrid = grid.slice();
+  const node = newGrid[row][col];
+  if (!node.isStart && !node.isFinish && node.isNode) {
+    const newNode = {
+      ...node,
+      isWall: !node.isWall,
+    };
+    newGrid[row][col] = newNode;
+  }
+  return newGrid;
 }
