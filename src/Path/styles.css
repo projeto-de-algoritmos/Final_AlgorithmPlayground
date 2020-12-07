@@ -1,5 +1,5 @@
 .grid-container {
-  margin: 10% auto;
+  margin: 1% auto;
 }
 
 .grid {
@@ -8,4 +8,14 @@
 
 button {
   margin: 2px;
+}
+
+.buttons {
+  margin: 1% auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
 }

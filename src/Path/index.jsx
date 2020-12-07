@@ -364,10 +364,62 @@ export default class Path extends Component {
     }
   }
 
+  clearWalls() {
+    if (!this.state.isRunning) {
+      const newGrid = this.state.grid.slice();
+      for (const row of newGrid) {
+        for (const node of row) {
+          let nodeClassName = document.getElementById(
+            `node-${node.row}-${node.col}`,
+          ).className;
+          if (nodeClassName === 'node node-wall') {
+            document.getElementById(`node-${node.row}-${node.col}`).className =
+              'node';
+            node.isWall = false;
+          }
+        }
+      }
+    }
+  }
+
   render() {
     const { grid, mouseIsPressed } = this.state;
     return (
-      <div>
+      <div className='container'>
+        <div
+          className='buttons'
+        >
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('Dijkstra')}>
+            Dijkstra's
+        </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('BFS')}>
+            Bread First Search
+        </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => this.visualize('DFS')}>
+            Depth First Search
+        </button>
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={() => this.clearGrid()}>
+          Clear Grid
+        </button>
+        <button
+          type="button"
+          className="btn btn-warning"
+          onClick={() => this.clearWalls()}>
+          Clear Walls
+        </button>
+        </div>
         <table
           className="grid-container"
           onMouseLeave={() => this.handleMouseLeave()}>
@@ -400,24 +452,6 @@ export default class Path extends Component {
             })}
           </tbody>
         </table>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('Dijkstra')}>
-          Dijkstra's
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('BFS')}>
-          Bread First Search
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => this.visualize('DFS')}>
-          Depth First Search
-        </button>
       </div>
     );
   }
