@@ -14,7 +14,8 @@ class Towers extends React.Component {
         c: []
       },
       moves: [],
-      value: 5
+      value: 5,
+      canChange: true
     };
     this.solutionTower(this.state.value, "a", "c", "b");
     this.handleChange = this.handleChange.bind(this);
@@ -43,6 +44,7 @@ class Towers extends React.Component {
   }
 
   async execute() {
+    this.setState({ canChange: false });
     var nextMove;
     while ((nextMove = this.state.moves.pop())) {
       await this.sleep(500);
@@ -50,6 +52,7 @@ class Towers extends React.Component {
       this.state.towers[nextMove[1]].unshift(disk);
       this.setState({ towers: this.state.towers });
     }
+    this.setState({ canChange: true });
   }
 
   sleep(ms) {
@@ -68,8 +71,12 @@ class Towers extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.value < 10)
+    if (event.target.value < 10) {
       this.setState({ value: event.target.value });
+    }
+    else {
+      alert("Please insert at most 9 discs :)");
+    }
   }
 
   handleSubmit(event) {
@@ -113,13 +120,16 @@ class Towers extends React.Component {
             dropDisc={() => this.dropDisc(i)}
           />
         ))}
-        <form onSubmit={this.handleSubmit} style={{marginTop: 40}}>
-          <label>
-            Número de discos:
+        {
+          this.state.canChange &&
+          <form onSubmit={this.handleSubmit} style={{ marginTop: 40 }}>
+            <label>
+              Number of discs:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Enviar" />
-        </form>
+            </label>
+            <input type="submit" value="Ok" />
+          </form>
+        }
       </div>
     );
   }
