@@ -1,8 +1,8 @@
 import React from 'react';
-import Path from './Path';
+import Home from './Home';
 
 function App() {
-  return <Path />
+  return <Home />
 }
 
 export default App;

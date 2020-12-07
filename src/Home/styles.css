@@ -1,0 +1,42 @@
+.grid-container {
+  background-color: black;
+}
+
+.grid {
+  white-space: pre;
+}
+
+button {
+  margin: 2px;
+}
+
+.buttons {
+  margin: 1% auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  margin: 1%;
+  display: flex;
+
+}
+
+.drawer {
+  background-color: '#FFFFFF';
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 290px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+}
+
+.section { 
+  display: flex;
+  width: 300px;
+  margin: 1%;
+  flex-direction: column;
+}
