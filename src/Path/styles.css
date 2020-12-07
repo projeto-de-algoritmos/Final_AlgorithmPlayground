@@ -1,5 +1,5 @@
 .grid-container {
-  margin: 1% auto;
+  background-color: black;
 }
 
 .grid {
@@ -17,5 +17,25 @@ button {
 }
 
 .container {
+  margin: 1%;
   display: flex;
+
+}
+
+.drawer {
+  background-color: '#FFFFFF';
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 100%;
+  height: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section { 
+  display: flex;
+  width: 100%;
+  margin: 1%;
+  flex-direction: column;
 }

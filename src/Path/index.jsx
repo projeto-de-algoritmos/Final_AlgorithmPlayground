@@ -26,6 +26,7 @@ export default class Path extends Component {
       currRow: 0,
       currCol: 0,
       isDesktopView: true,
+      grapDrawer: true
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -317,8 +318,12 @@ export default class Path extends Component {
   }
 
   animate(visitedNodesInOrder, nodesInShortestPathOrder) {
-    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-      if (i === visitedNodesInOrder.length) {
+    let cond = visitedNodesInOrder?.length ? visitedNodesInOrder.length : 0;
+    if (!cond) {
+      alert("Not reachable :(")
+    }
+    for (let i = 0; i <= cond; i++) {
+      if (i === cond) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
         }, 10 * i);
@@ -383,42 +388,53 @@ export default class Path extends Component {
   }
 
   render() {
-    const { grid, mouseIsPressed } = this.state;
+    const { grid, mouseIsPressed, grapDrawer } = this.state;
     return (
       <div className='container'>
-        <div
-          className='buttons'
-        >
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => this.visualize('Dijkstra')}>
-            Dijkstra's
+        <div className='section'>
+          <div
+            className='drawer'
+            onClick={() => this.setState({ grapDrawer: !grapDrawer })}
+          >
+            Open
+            </div>
+          {
+            grapDrawer &&
+            <div
+              className='buttons'
+            >
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.visualize('Dijkstra')}>
+                Dijkstra's
+          </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.visualize('BFS')}>
+                Bread First Search
+          </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.visualize('DFS')}>
+                Depth First Search
+            </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => this.clearGrid()}>
+                Clear Grid
+            </button>
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={() => this.clearWalls()}>
+                Clear Walls
         </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => this.visualize('BFS')}>
-            Bread First Search
-        </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => this.visualize('DFS')}>
-            Depth First Search
-        </button>
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => this.clearGrid()}>
-          Clear Grid
-        </button>
-        <button
-          type="button"
-          className="btn btn-warning"
-          onClick={() => this.clearWalls()}>
-          Clear Walls
-        </button>
+            </div>
+          }
         </div>
         <table
           className="grid-container"
