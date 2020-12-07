@@ -1,15 +1,12 @@
 export function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
   startNode.distance = 0;
-  const unvisitedNodes = getAllNodes(grid); // Q: different from using grid or slice of grid???
+  const unvisitedNodes = allNodes(grid);
 
   while (unvisitedNodes.length) {
-    sortNodesByDistance(unvisitedNodes);
+    sortByDistance(unvisitedNodes);
     const closestNode = unvisitedNodes.shift();
-    // If we encounter a wall, we skip it.
     if (!closestNode.isWall) {
-      // If the closest node is at a distance of infinity,
-      // we must be trapped and should stop.
       if (closestNode.distance === Infinity) return visitedNodesInOrder;
       closestNode.isVisited = true;
       visitedNodesInOrder.push(closestNode);
@@ -19,7 +16,7 @@ export function dijkstra(grid, startNode, finishNode) {
   }
 }
 
-function getAllNodes(grid) {
+function allNodes(grid) {
   const nodes = [];
   for (const row of grid) {
     for (const node of row) {
@@ -29,7 +26,7 @@ function getAllNodes(grid) {
   return nodes;
 }
 
-function sortNodesByDistance(unvisitedNodes) {
+function sortByDistance(unvisitedNodes) {
   unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
 }
 
