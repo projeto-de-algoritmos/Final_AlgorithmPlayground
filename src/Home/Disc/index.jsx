@@ -22,8 +22,6 @@ const Disc = ({ size, topDisc, startDrag }) => {
     <div
       className='disc'
       style={discStyle}
-      draggable={topDisc}
-      onDragStart={startDrag}
     >
       <span className='disc-label'>
         {size}

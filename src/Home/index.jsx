@@ -310,7 +310,6 @@ export default class Path extends Component {
           visitedNodesInOrder = dfs(grid, startNode, finishNode);
           break;
         default:
-          // should never get here
           break;
       }
       const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);

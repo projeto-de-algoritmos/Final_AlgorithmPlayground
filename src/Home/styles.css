@@ -32,6 +32,7 @@ button {
   justify-content: center;
   align-items: center;
   margin: 2%;
+  cursor: pointer;
 }
 
 .section { 

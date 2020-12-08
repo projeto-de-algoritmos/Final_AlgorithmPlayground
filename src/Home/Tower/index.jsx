@@ -9,8 +9,6 @@ const Tower = ({ towerDiscs, maxSize, startTopDiscDrag, dropDisc }) => {
     <div
       className='tower'
       style={towerStyle}
-      onDragOver={(e) => { e.preventDefault() }}
-      onDrop={dropDisc}
     >
       <div className='tower-pillar' style={pillarStyle} />
       <div className='tower-base' />

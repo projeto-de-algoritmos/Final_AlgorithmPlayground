@@ -1,5 +1,3 @@
-
-import _ from 'lodash';
 import React from 'react';
 import './style.css';
 import Tower from '../Tower';
@@ -20,27 +18,6 @@ class Towers extends React.Component {
     this.solutionTower(this.state.value, "a", "c", "b");
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  startTopDiscDrag(activeTower) {
-    this.activeTower = activeTower;
-  }
-
-  dropDisc(destTower) {
-    const sourceTower = this.activeTower;
-    this.activeTower = null;
-    if (sourceTower === destTower || sourceTower === null) return;
-
-    this.setState((state) => {
-      if (!state.discs[sourceTower]) return state;
-      const disc = state.discs[sourceTower][0];
-      if (state.discs[destTower][0] < disc) return state;
-
-      let discs = [...state.discs];
-      discs[sourceTower] = _.tail(discs[sourceTower]);
-      discs[destTower] = [disc, ...state.discs[destTower]];
-      return { discs };
-    });
   }
 
   async execute() {
@@ -116,8 +93,6 @@ class Towers extends React.Component {
             key={tower}
             towerDiscs={this.state.towers[tower]}
             maxSize={this.props.discsNumber}
-            startTopDiscDrag={() => this.startTopDiscDrag(i)}
-            dropDisc={() => this.dropDisc(i)}
           />
         ))}
         {
