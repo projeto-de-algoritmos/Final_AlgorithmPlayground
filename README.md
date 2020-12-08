@@ -1,7 +1,7 @@
 # Algorithm playground
 
 **Número da Lista**: Final<br>
-**Conteúdo da Disciplina**: Greed<br>
+**Conteúdo da Disciplina**: Final<br>
 
 ## Alunos
 |Matrícula | Aluno |
@@ -25,11 +25,11 @@ O projeto consiste na representação de alguns algoritmos de grafos, greedy, e 
 
 Primeiramente devemos clonar o repositório:
 
-    $ git clone https://github.com/projeto-de-algoritmos/Final_
+    $ git clone https://github.com/projeto-de-algoritmos/Final_AlgorithmPlayground
 
 Após clonar o repositório, é preciso acessar a pasta do projeto:
 
-    $ cd Final
+    $ cd Final_AlgorithmPlayground
 
 Para rodar o projeto é necessário ter instalado o [yarn](https://classic.yarnpkg.com/pt-BR/docs/install/#debian-stable) na versão estável mais atual.
 
@@ -49,5 +49,3 @@ E então acessar no navegador:
 
 ## Uso 
 Ao selecionar uma aba, você será apresentado à uma lista de aplicações ou visualizações dos algoritmos, no caso dos agoritmos de grafos, é possivel criar uma parede entre os dois pontos destacados e visualizar o funcionamento do algoritmo, para isso basta pressionar o mouse acima das células desejadas. Já para a aba de D&C será mostrado uma aplicação da torre de hanói sendo resolvida automaticamente, sendo possivel apenas alterar a quantidade de discos desejados.
-
-## Outros 
