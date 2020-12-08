@@ -14,6 +14,10 @@ O projeto consiste na representação de alguns algoritmos de grafos, greedy, e 
 
 ## Screenshots
 
+![img1](./tutorial/tutorial.png)
+![img2](./tutorial/tutorial2.png)
+![img3](./tutorial/tutorial3.png)
+![img4](./tutorial/tutorial4.png)
 
 ## Instalação 
 **Linguagem**: Javascript<br>
