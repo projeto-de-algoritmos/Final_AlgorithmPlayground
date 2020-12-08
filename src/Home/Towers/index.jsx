@@ -13,7 +13,7 @@ class Towers extends React.Component {
       },
       moves: [],
       value: 5,
-      canChange: true
+      canChange: false
     };
     this.solutionTower(this.state.value, "a", "c", "b");
     this.handleChange = this.handleChange.bind(this);
@@ -49,7 +49,9 @@ class Towers extends React.Component {
 
   handleChange(event) {
     if (event.target.value < 10) {
-      this.setState({ value: event.target.value });
+      this.setState({
+        value: event.target.value,
+      });
     }
     else {
       alert("Please insert at most 9 discs :)");
@@ -61,7 +63,6 @@ class Towers extends React.Component {
     for (let i = 0; i < this.state.value; i++) {
       discs.push(i + 1);
     }
-    console.log(discs.length, discs)
     this.setState({
       towers: {
         a: discs,
